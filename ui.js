@@ -50,19 +50,21 @@ function updateHUD() {
 
 function drawLightning() {
   lightningCtx.clearRect(0, 0, lightningCanvas.width, lightningCanvas.height);
-  lightningCtx.strokeStyle = "rgba(128, 0, 128, 0.8)";
-  lightningCtx.lineWidth = 2;
-  lightningCtx.beginPath();
-  lightningCtx.moveTo(Math.random() * lightningCanvas.width, 0);
 
-  let y = 0;
-  while (y < lightningCanvas.height) {
-    let x = Math.random() * lightningCanvas.width;
-    y += Math.random() * 50 + 50;
-    lightningCtx.lineTo(x, y);
+  const numBolts = Math.floor(Math.random() * 3) + 1;
+
+  for (let i = 0; i < numBolts; i++) {
+    const startX = Math.random() * lightningCanvas.width;
+    const endX = startX + (Math.random() - 0.5) * 100;
+    const bolt = new LightningBolt(
+      startX,
+      0,
+      endX,
+      lightningCanvas.height,
+      lightningCtx
+    );
+    bolt.draw();
   }
-
-  lightningCtx.stroke();
 
   setTimeout(() => {
     lightningCtx.clearRect(0, 0, lightningCanvas.width, lightningCanvas.height);
